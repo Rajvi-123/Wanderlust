@@ -27,11 +27,12 @@ app.use(methodOverride("_method"));
 app.engine('ejs',ejsMate);
 app.use(express.static(path.join(__dirname,"public")));
 
-
-app.get("/", (req, res) => {
-    res.send("Hi, I am root");
+//home route
+app.get("/", async (req, res) => {
+  const featuredListings = await Listing.find({});
+  res.render("listings/home.ejs", { featuredListings });
 });
-//index rout
+//index route
 app.get("/listings", async (req, res) => {
     const allListings = await Listing.find({});
     res.render("/Major Project/views/listings/index.ejs", { allListings });
@@ -50,14 +51,14 @@ app.get("/listings/:id", async (req, res) => {
   res.render("listings/show.ejs", { listing });
 });
 
-//create rout
+//create route
 app.post("/listings", async (req, res) => {
   const newListing = new Listing(req.body.listing);
   await newListing.save();
   res.redirect("/listings");
 });
 
-//edit rout
+//edit route
 app.get("/listings/:id/edit", async (req, res) => {
   let { id } = req.params;
   const listing = await Listing.findById(id);
@@ -78,8 +79,6 @@ app.delete("/listings/:id", async (req, res) => {
   console.log(deletedListing);
   res.redirect("/listings");
 });
- 
-
 
 app.listen(8000, () => {
     console.log("Server is listening on port 8000");

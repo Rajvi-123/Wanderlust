@@ -1,0 +1,48 @@
+<% layout("../views/layout/boilerplate.ejs") %>
+<body>
+  <div class="container">
+    <h1>Welcome to Wanderlust</h1>
+    <p>Discover amazing places to stay, explore, and enjoy your journey!</p>
+
+    <h3>Featured Listings</h3>
+    <div class="marquee-container">
+      <div class="marquee">
+        <% featuredListings.forEach((listing) => { %>
+            <div class="card">
+              <img src="<%= listing.image %>" 
+              class="card-img-top" 
+              alt="listing_image" 
+              style="height: 20rem; width: 100%;">
+              <div class="card-body text-center">
+                <p class="card-text"><b><%= listing.title %></b></p>
+                &#8377; <%= listing.price ? listing.price.toLocaleString("en-IN") : "Price not available" %>/night
+              </div>
+            </div>
+          </a>
+        <% }); %>
+      </div>
+      
+    </div>
+    <div class="marquee-container">
+      <div class="marquee-reverse">
+        <% featuredListings.forEach((listing) => { %>
+          <a href="/listings/<%= listing._id %>" class="listing-link">
+            <div class="card">
+              <img src="<%= listing.image %>" 
+              class="card-img-top" 
+              alt="listing_image" 
+              style="height: 20rem; width: 100%;">
+              <div class="card-body text-center">
+                <p class="card-text"><b><%= listing.title %></b></p>
+                &#8377; <%= listing.price ? listing.price.toLocaleString("en-IN") : "Price not available" %>/night
+              </div>
+            </div>
+          </a>
+        <% }); %>
+      </div>
+      
+    </div>
+    
+  </div>
+
+</body>
